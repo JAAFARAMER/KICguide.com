@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>المساعد الذكي | الخوارزمي</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <span class="badge"></span>
+        <span>
+          قسم هندسة المعلومات والاتصالات
+          <small>كلية الهندسة الخوارزمي – جامعة بغداد</small>
+        </span>
+      </a>
+
+      <nav class="menu">
+        <a href="index.html">الرئيسية</a>
+        <a href="assistant.html">المساعد الذكي</a>
+        <a href="staff.html">التدريسيين</a>
+        <a href="courses.html">المقررات والمصادر</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <h2>المساعد الذكي</h2>
+    <p class="meta">
+      اختر المرحلة، ثم المادة، ثم نوع المساعدة. ستظهر النتائج تلقائيًا مع روابط وشرح مختصر.
+    </p>
+
+    <div class="card wizard" style="margin-top:12px;">
+      <div class="w-row">
+        <select id="stage" class="select">
+          <option value="">اختر المرحلة</option>
+          <option value="1">المرحلة الأولى</option>
+          <option value="2">المرحلة الثانية</option>
+          <option value="3">المرحلة الثالثة</option>
+          <option value="4">المرحلة الرابعة</option>
+        </select>
+
+        <select id="course" class="select">
+          <option value="">اختر المادة</option>
+          <option value="electronics">Electronics</option>
+          <option value="dsd">Digital System Design (DSD)</option>
+          <option value="oop">OOP C++</option>
+          <option value="networks">Networks</option>
+          <option value="signals">Signals & Systems</option>
+        </select>
+
+        <select id="need" class="select">
+          <option value="">اختر نوع المساعدة</option>
+          <option value="sources">مصادر وكتب</option>
+          <option value="youtube">قنوات وفيديوهات</option>
+          <option value="tips">خطة مذاكرة ونصائح</option>
+          <option value="students">تواصل ومساعدة طلابية</option>
+        </select>
+
+        <button id="show" class="kbtn primary">عرض النتائج</button>
+        <button id="reset" class="kbtn">مسح</button>
+      </div>
+
+      <div id="hint" class="meta" style="margin-top:10px;">
+        اختر 3 خيارات ثم اضغط “عرض النتائج”.
+      </div>
+
+      <div id="results" class="result-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      All rights reserved — المطور: JAAFAR AMER
+    </div>
+  </footer>
+
+  <script>
+    const data = {
+      electronics: {
+        name: "Electronics",
+        sources: [
+          { title: "كتاب مقترح", text: "Electronic Devices and Circuit Theory (Boylestad)", link: "" },
+          { title: "ملزمة", text: "ملزمة القسم/الدكتور (ضع اسمها هنا)", link: "" },
+          { title: "مراجع إضافية", text: "Microelectronic Circuits (Sedra/Smith) للمستوى المتقدم", link: "" }
+        ],
+        youtube: [
+          { title: "All About Electronics", text: "شرح ممتاز للإلكترونيك عمليًا", link: "https://www.youtube.com/@ALLABOUTELECTRONICS" },
+          { title: "Neso Academy", text: "مقاطع مرتبة للمفاهيم الأساسية", link: "https://www.youtube.com/@nesoacademy" },
+          { title: "The Organic Chemistry Tutor", text: "مسائل ومفاهيم بشكل مبسط", link: "https://www.youtube.com/@TheOrganicChemistryTutor" }
+        ],
+        tips: [
+          { title: "خطة مذاكرة", text: "ابدأ بـ Diode ثم BJT ثم MOSFET، وبعدها Biasing ثم Amplifiers.", link: "" },
+          { title: "ملاحظة مهمة", text: "حل مسائل كثيرة يوميًا أفضل من القراءة فقط.", link: "" },
+          { title: "تركيز الامتحان", text: "سوّي ملخص قوانين + أمثلة محلولة لكل موضوع.", link: "" }
+        ]
+      },
+
+      dsd: {
+        name: "Digital System Design (DSD)",
+        sources: [
+          { title: "كتاب مقترح", text: "Digital Design (Morris Mano)", link: "" },
+          { title: "مرجع إضافي", text: "Digital Fundamentals (Thomas Floyd)", link: "" },
+          { title: "ملزمة", text: "ملزمة القسم/الدكتور (ضع اسمها هنا)", link: "" }
+        ],
+        youtube: [
+          { title: "Neso Academy (Digital Electronics)", text: "قائمة تشغيل قوية", link: "https://www.youtube.com/playlist?list=PLBlnK6fEyqRjMH3mWf6kwqiTbT798eAOm" },
+          { title: "Gate Smashers", text: "شرح سريع ومناسب للطلاب", link: "https://www.youtube.com/@GateSmashers" },
+          { title: "Ben Eater", text: "مفهوم عملي ممتع للدوائر الرقمية", link: "https://www.youtube.com/@BenEater" }
+        ],
+        tips: [
+          { title: "ترتيب ذكي", text: "Gates → K-Map → Combinational → FFs → Counters → Registers.", link: "" },
+          { title: "نقطة قوية", text: "افهم Timing و Truth Tables ثم الحفظ يصير سهل.", link: "" },
+          { title: "تدريب", text: "حل مسائل K-Map وCounters يوميًا.", link: "" }
+        ]
+      },
+
+      oop: {
+        name: "OOP C++",
+        sources: [
+          { title: "كتاب مقترح", text: "C++ How to Program", link: "" },
+          { title: "مرجع عملي", text: "LearnCpp.com (مفيد جدًا)", link: "https://www.learncpp.com/" },
+          { title: "ملزمة", text: "ملزمة القسم/الدكتور (ضع اسمها هنا)", link: "" }
+        ],
+        youtube: [
+          { title: "ProgrammingKnowledge", text: "سلسلة C++ مفيدة", link: "https://www.youtube.com/@ProgrammingKnowledge" },
+          { title: "freeCodeCamp", text: "دورات طويلة وشاملة", link: "https://www.youtube.com/@freecodecamp" },
+          { title: "The Cherno", text: "مستوى أعلى + شرح قوي", link: "https://www.youtube.com/@TheCherno" }
+        ],
+        tips: [
+          { title: "خطة مذاكرة", text: "Classes → Constructors → Inheritance → Polymorphism → Overloading.", link: "" },
+          { title: "تنبؤ الإخراج", text: "تتبّع القيم خطوة بخطوة ولا تفترض.", link: "" },
+          { title: "تطبيق", text: "سوّي مشروع صغير: نظام طلاب/حساب بنكي/إدارة مكتبة.", link: "" }
+        ]
+      },
+
+      networks: {
+        name: "Networks",
+        sources: [
+          { title: "كتاب مقترح", text: "Computer Networking: A Top-Down Approach", link: "" },
+          { title: "CCNA Reference", text: "Jeremy’s IT Lab (CCNA)", link: "https://www.youtube.com/@JeremysITLab" },
+          { title: "ملزمة", text: "ملزمة القسم/الدكتور (ضع اسمها هنا)", link: "" }
+        ],
+        youtube: [
+          { title: "Jeremy’s IT Lab", text: "قوي للـ CCNA", link: "https://www.youtube.com/@JeremysITLab" },
+          { title: "NetworkChuck", text: "ممتع ومفيد", link: "https://www.youtube.com/@NetworkChuck" },
+          { title: "David Bombal", text: "شبكات وأمن", link: "https://www.youtube.com/@davidbombal" }
+        ],
+        tips: [
+          { title: "ترتيب مذاكرة", text: "OSI/TCP-IP → IP/Subnetting → Switching → Routing → Services.", link: "" },
+          { title: "تطبيق", text: "جرّب Packet Tracer وسوّي Labs صغيرة.", link: "" },
+          { title: "نقطة حاسمة", text: "Subnetting لازم يصير سريع عندك.", link: "" }
+        ]
+      },
+
+      signals: {
+        name: "Signals & Systems",
+        sources: [
+          { title: "كتاب مقترح", text: "Signals and Systems (Oppenheim)", link: "" },
+          { title: "ملزمة", text: "ملزمة القسم/الدكتور (ضع اسمها هنا)", link: "" },
+          { title: "مفيد", text: "حل مسائل كثيرة على Convolution وFourier.", link: "" }
+        ],
+        youtube: [
+          { title: "NPTEL", text: "شرح أكاديمي قوي", link: "https://www.youtube.com/@nptelhrd" },
+          { title: "MIT OpenCourseWare", text: "محتوى عالمي", link: "https://www.youtube.com/@mitocw" },
+          { title: "Khan Academy", text: "تبسيط لبعض الأفكار", link: "https://www.youtube.com/@khanacademy" }
+        ],
+        tips: [
+          { title: "خطة مذاكرة", text: "Basics → LTI → Convolution → Fourier → Sampling.", link: "" },
+          { title: "ملاحظة", text: "ارسم الإشارات دائمًا قبل الحل.", link: "" },
+          { title: "تدريب", text: "تمارين يومية قصيرة أفضل من جلسة طويلة.", link: "" }
+        ]
+      }
+    };
+
+    function cardHTML(item){
+      const hasLink = item.link && item.link.trim().length > 0;
+      return `
+        <div class="rbox">
+          <h3>${item.title}</h3>
+          <div class="meta">${item.text}</div>
+          ${hasLink ? `<p><a href="${item.link}" target="_blank">فتح الرابط</a></p>` : ``}
+        </div>
+      `;
+    }
+
+    function show(){
+      const stage = document.getElementById("stage").value;
+      const course = document.getElementById("course").value;
+      const need = document.getElementById("need").value;
+      const hint = document.getElementById("hint");
+      const results = document.getElementById("results");
+
+      results.innerHTML = "";
+
+      if(!stage || !course || !need){
+        hint.textContent = "رجاءً اختر المرحلة + المادة + نوع المساعدة.";
+        return;
+      }
+
+      const c = data[course];
+      if(!c){
+        hint.textContent = "هذه المادة غير موجودة حاليًا.";
+        return;
+      }
+
+      hint.textContent = `النتائج: ${c.name} — ${stage} — ${need === "sources" ? "مصادر" : need === "youtube" ? "فيديوهات" : need === "tips" ? "نصائح" : "تواصل"}`;
+
+      if(need === "students"){
+        const items = [
+          { title: "مجموعة طلابية", text: "ضع هنا رابط مجموعة Telegram/WhatsApp الخاصة بالقسم (اختياري).", link: "" },
+          { title: "سؤال سريع", text: "اكتب سؤال مختصر للطلاب: (مثال: أفضل ملزمة للإلكترونيك؟)", link: "" },
+          { title: "تنبيه", text: "تأكد أن الروابط التي تضعها رسمية أو موثوقة.", link: "" }
+        ];
+        results.innerHTML = items.map(cardHTML).join("");
+        return;
+      }
+
+      const list = c[need] || [];
+      results.innerHTML = list.map(cardHTML).join("");
+    }
+
+    function resetAll(){
+      document.getElementById("stage").value = "";
+      document.getElementById("course").value = "";
+      document.getElementById("need").value = "";
+      document.getElementById("hint").textContent = "اختر 3 خيارات ثم اضغط “عرض النتائج”.";
+      document.getElementById("results").innerHTML = "";
+    }
+
+    document.getElementById("show").addEventListener("click", show);
+    document.getElementById("reset").addEventListener("click", resetAll);
+  </script>
+
+</body>
+</html>
